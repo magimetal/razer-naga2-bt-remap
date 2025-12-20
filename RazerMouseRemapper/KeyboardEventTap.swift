@@ -43,26 +43,36 @@ final class KeyboardEventTap {
     private var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
 
-    /// Keys pending remap (detected via HID from mouse)
-    /// Stores: CGKeyCode -> timestamp when HID event was received
-    private var pendingKeys: [CGKeyCode: Date] = [:]
-    private let pendingKeyLock = NSLock()
-
-    /// How long to keep a key in pending state (50ms should be plenty)
-    private let pendingKeyTimeout: TimeInterval = 0.050
+    /// Keys currently held down from mouse (based on HID events)
+    private var activeMouseKeys: Set<CGKeyCode> = []
+    /// Keys that were remapped on keyDown and need their keyUp remapped too
+    private var remappedKeys: Set<CGKeyCode> = []
+    private let keyLock = NSLock()
 
     var isEnabled: Bool = false
 
-    /// Mark a key as pending remap (called when HID event from mouse is detected)
+    /// Mark a key as active (called when HID key-down from mouse is detected)
     /// - Parameter hidUsage: The HID usage code from keyboard page
-    func markKeyPending(hidUsage: UInt32) {
+    func markKeyActive(hidUsage: UInt32) {
         guard let cgKeyCode = Self.hidUsageToCGKeyCode[hidUsage] else { return }
 
-        pendingKeyLock.lock()
-        pendingKeys[cgKeyCode] = Date()
-        pendingKeyLock.unlock()
+        keyLock.lock()
+        activeMouseKeys.insert(cgKeyCode)
+        keyLock.unlock()
 
-        debugLog("Marked key \(cgKeyCode) as pending from HID usage 0x\(String(hidUsage, radix: 16))")
+        debugLog("Marked key \(cgKeyCode) as ACTIVE from HID usage 0x\(String(hidUsage, radix: 16))")
+    }
+
+    /// Mark a key as inactive (called when HID key-up from mouse is detected)
+    /// - Parameter hidUsage: The HID usage code from keyboard page
+    func markKeyInactive(hidUsage: UInt32) {
+        guard let cgKeyCode = Self.hidUsageToCGKeyCode[hidUsage] else { return }
+
+        keyLock.lock()
+        activeMouseKeys.remove(cgKeyCode)
+        keyLock.unlock()
+
+        debugLog("Marked key \(cgKeyCode) as INACTIVE from HID usage 0x\(String(hidUsage, radix: 16))")
     }
 
     private func debugLog(_ message: String) {
@@ -82,29 +92,26 @@ final class KeyboardEventTap {
         }
     }
 
-    /// Check if a key is pending remap and consume it
-    private func consumePendingKey(_ keyCode: CGKeyCode) -> Bool {
-        pendingKeyLock.lock()
-        defer { pendingKeyLock.unlock() }
-
-        guard let timestamp = pendingKeys[keyCode] else { return false }
-
-        // Check if still within timeout window
-        if Date().timeIntervalSince(timestamp) <= pendingKeyTimeout {
-            // Don't remove on keyDown - wait for keyUp or timeout
-            return true
+    /// Check if a key should be remapped on keyDown
+    private func shouldRemapKeyDown(_ keyCode: CGKeyCode) -> Bool {
+        keyLock.lock()
+        let isActive = activeMouseKeys.contains(keyCode)
+        if isActive {
+            remappedKeys.insert(keyCode)
         }
-
-        // Expired
-        pendingKeys.removeValue(forKey: keyCode)
-        return false
+        keyLock.unlock()
+        return isActive
     }
 
-    /// Clear a pending key (called on keyUp)
-    private func clearPendingKey(_ keyCode: CGKeyCode) {
-        pendingKeyLock.lock()
-        pendingKeys.removeValue(forKey: keyCode)
-        pendingKeyLock.unlock()
+    /// Check if a key should be remapped on keyUp
+    private func shouldRemapKeyUp(_ keyCode: CGKeyCode) -> Bool {
+        keyLock.lock()
+        let wasRemapped = remappedKeys.contains(keyCode)
+        if wasRemapped {
+            remappedKeys.remove(keyCode)
+        }
+        keyLock.unlock()
+        return wasRemapped
     }
 
     /// Start intercepting keyboard events
@@ -170,22 +177,24 @@ final class KeyboardEventTap {
         let keyCode = CGKeyCode(event.getIntegerValueField(.keyboardEventKeycode))
         let isKeyDown = type == .keyDown
 
-        // Check if this is a key we should remap AND it came from the mouse (pending from HID)
+        // Check if this is a key we could remap
         if let newKeyCode = Self.keyRemapping[keyCode] {
-            debugLog("CGEvent: keyCode=\(keyCode) isKeyDown=\(isKeyDown), checking pending...")
+            debugLog("CGEvent: keyCode=\(keyCode) isKeyDown=\(isKeyDown)")
 
-            // Only remap if this key is pending (detected via HID from mouse)
-            if consumePendingKey(keyCode) {
-                // Remap the key
+            let shouldRemap: Bool
+            if isKeyDown {
+                // On keyDown: remap if key is active from mouse, and track it
+                shouldRemap = shouldRemapKeyDown(keyCode)
+            } else {
+                // On keyUp: remap if we remapped the corresponding keyDown
+                shouldRemap = shouldRemapKeyUp(keyCode)
+            }
+
+            if shouldRemap {
                 event.setIntegerValueField(.keyboardEventKeycode, value: Int64(newKeyCode))
                 debugLog("REMAPPED key \(keyCode) -> \(newKeyCode) (\(isKeyDown ? "down" : "up"))")
-
-                // Clear pending on keyUp
-                if !isKeyDown {
-                    clearPendingKey(keyCode)
-                }
             } else {
-                debugLog("Key \(keyCode) NOT pending, passing through")
+                debugLog("Key \(keyCode) not from mouse, passing through")
             }
         }
 

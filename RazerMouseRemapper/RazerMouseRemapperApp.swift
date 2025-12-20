@@ -69,23 +69,26 @@ final class AppState: ObservableObject {
         }
     }
 
-    /// Process HID value from Razer mouse to mark keys as pending for remapping
+    /// Process HID value from Razer mouse to track active keys for remapping
     private func processHIDValue(_ value: IOHIDValue) {
         let element = IOHIDValueGetElement(value)
         let usagePage = IOHIDElementGetUsagePage(element)
         let usage = IOHIDElementGetUsage(element)
         let intValue = IOHIDValueGetIntegerValue(value)
 
+        // Only process keyboard usage page (0x07)
+        guard usagePage == 0x07 else { return }
+
         // Debug: log all keyboard page events
-        if usagePage == 0x07 {
-            debugLog("HID Keyboard: usage=0x\(String(usage, radix: 16)) value=\(intValue)")
+        debugLog("HID Keyboard: usage=0x\(String(usage, radix: 16)) value=\(intValue)")
+
+        if intValue != 0 {
+            // Key-down: mark key as active
+            keyboardEventTap.markKeyActive(hidUsage: UInt32(usage))
+        } else {
+            // Key-up: mark key as inactive
+            keyboardEventTap.markKeyInactive(hidUsage: UInt32(usage))
         }
-
-        // Only process keyboard usage page (0x07) key-down events
-        guard usagePage == 0x07, intValue != 0 else { return }
-
-        // Mark this key as pending for remapping
-        keyboardEventTap.markKeyPending(hidUsage: UInt32(usage))
     }
 
     private func debugLog(_ message: String) {
