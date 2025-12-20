@@ -1,0 +1,55 @@
+{
+  "": {
+    "dependencies": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/RazerMouseRemapper.d",
+    "object": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/RazerMouseRemapper.o",
+    "swift-dependencies": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/master.swiftdeps"
+  },
+  "/Users/justinbauer/Dev/razer-mmo-mouse/RazerMouseRemapper/KeyRemapper.swift": {
+    "object": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/KeyRemapper.swift.o",
+    "swiftmodule": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/KeyRemapper~partial.swiftmodule",
+    "swift-dependencies": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/KeyRemapper.swiftdeps",
+    "diagnostics": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/KeyRemapper.dia"
+  },
+  "/Users/justinbauer/Dev/razer-mmo-mouse/RazerMouseRemapper/KeyboardEventTap.swift": {
+    "object": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/KeyboardEventTap.swift.o",
+    "swiftmodule": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/KeyboardEventTap~partial.swiftmodule",
+    "swift-dependencies": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/KeyboardEventTap.swiftdeps",
+    "diagnostics": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/KeyboardEventTap.dia"
+  },
+  "/Users/justinbauer/Dev/razer-mmo-mouse/RazerMouseRemapper/LaunchAtLoginManager.swift": {
+    "object": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/LaunchAtLoginManager.swift.o",
+    "swiftmodule": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/LaunchAtLoginManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/LaunchAtLoginManager.swiftdeps",
+    "diagnostics": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/LaunchAtLoginManager.dia"
+  },
+  "/Users/justinbauer/Dev/razer-mmo-mouse/RazerMouseRemapper/MenuBarView.swift": {
+    "object": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/MenuBarView.swift.o",
+    "swiftmodule": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/MenuBarView~partial.swiftmodule",
+    "swift-dependencies": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/MenuBarView.swiftdeps",
+    "diagnostics": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/MenuBarView.dia"
+  },
+  "/Users/justinbauer/Dev/razer-mmo-mouse/RazerMouseRemapper/PermissionManager.swift": {
+    "object": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/PermissionManager.swift.o",
+    "swiftmodule": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/PermissionManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/PermissionManager.swiftdeps",
+    "diagnostics": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/PermissionManager.dia"
+  },
+  "/Users/justinbauer/Dev/razer-mmo-mouse/RazerMouseRemapper/RazerDeviceManager.swift": {
+    "object": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/RazerDeviceManager.swift.o",
+    "swiftmodule": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/RazerDeviceManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/RazerDeviceManager.swiftdeps",
+    "diagnostics": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/RazerDeviceManager.dia"
+  },
+  "/Users/justinbauer/Dev/razer-mmo-mouse/RazerMouseRemapper/RazerMouseRemapperApp.swift": {
+    "object": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/RazerMouseRemapperApp.swift.o",
+    "swiftmodule": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/RazerMouseRemapperApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/RazerMouseRemapperApp.swiftdeps",
+    "diagnostics": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/RazerMouseRemapperApp.dia"
+  },
+  "/Users/justinbauer/Dev/razer-mmo-mouse/RazerMouseRemapper/SyntheticKeyEmitter.swift": {
+    "object": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/SyntheticKeyEmitter.swift.o",
+    "swiftmodule": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/SyntheticKeyEmitter~partial.swiftmodule",
+    "swift-dependencies": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/SyntheticKeyEmitter.swiftdeps",
+    "diagnostics": "/Users/justinbauer/Dev/razer-mmo-mouse/.build/arm64-apple-macosx/release/RazerMouseRemapper.build/SyntheticKeyEmitter.dia"
+  }
+}
